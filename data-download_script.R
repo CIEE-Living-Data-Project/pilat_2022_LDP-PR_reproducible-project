@@ -1,3 +1,12 @@
+#create a pre-registration
+install.packages("prereg")
+library(prereg)
+library(markdown)
+install.packages("tinytex")
+tinytex::install_tinytex()
+library(tinytex)
+library(tidyverse)
+
 #create a folder for data
 dir.create("data/")
 
