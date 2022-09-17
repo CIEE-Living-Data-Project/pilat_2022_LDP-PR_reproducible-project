@@ -13,6 +13,9 @@ dir.create("data/")
 #create a folder for scripts
 dir.create("scripts/")
 
+data.dest.file <- "/Users/hannahpilat/Documents/UBCO/Living Data Project/Productivity-reproducibility/pilat_2022_LDP-PR_reproducible-project"
+metadata.dest.file <- "/Users/hannahpilat/Documents/UBCO/Living Data Project/Productivity-reproducibility/pilat_2022_LDP-PR_reproducible-project"
+
 #create a directory for the data source
 dir.create("data/url")
 dir.create("data/github")
@@ -41,7 +44,7 @@ saskatoon_occ <- ("Amelanchier alnifolia")
 
 # download GBIF occurrence records within a specified window of coordinates:
 #list coordinates small first, large second
-gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE, limit = 20000, decimalLongitude = "-110,-103", decimalLatitude = "52, 56")  # note that coordinate ranges must be specified this way: "smaller, larger" (e.g. "-5, -2")
+gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE, limit = 20000, decimalLongitude = "-110,-103", decimalLatitude = "52, 56")  
 
 #take a look at the downloaded data
 gbif_data

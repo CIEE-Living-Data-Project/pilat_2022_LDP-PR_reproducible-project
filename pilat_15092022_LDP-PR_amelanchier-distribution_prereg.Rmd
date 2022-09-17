@@ -1,30 +1,50 @@
 ---
-title: "pilat_15092022_LDP-PR_amelanchier-distribution_prereg"
+title: "Preregistration for Spatial Distribution of Amelanchier alnifolia occurrences in North-Central Saskatchewan, Canada"
 author: "Hannah Pilat"
 date: "2022-09-15"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+#format for Ecology Letters
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+geometry: margin=1in
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+header-includes: - /usepackage{setspace} #double space the lines -
+/doublespacing - /usepackage{lineno} #include line numbers -
+/linenumbers bibliography: pilat_prod-repro_zotero-collection.bib
+output: pdf_document \## R Markdown
 
-```{r cars}
-summary(cars)
+##Authors
+
+##Abstract
+
+##Introduction
+
+##Methods
+
+##Results
+
+##Discussion
+
+##Conclusion
+
+##References
+
+##Tables
+
+```{r}
+
 ```
 
-## Including Plots
+##Figure Captions
 
-You can also embed plots, for example:
+##Figures
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+##Appendices
