@@ -6,6 +6,14 @@ output: pdf_document
 editor_options: 
   markdown: 
     wrap: 72
+    geometry: margin=1in
+    csl: ecology-letters.csl
+header-includes: - /usepackage{setspace} #double space the lines 
+- /doublespacing 
+- /usepackage{lineno} #include line numbers 
+- /linenumbers 
+bibliography: pilat_prod-repro_zotero-collection.bib 
+output: pdf_document ## R Markdown
 ---
 
 ```{r setup, include=FALSE}
@@ -13,13 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 #format for Ecology Letters
-
-geometry: margin=1in
-
-header-includes: - /usepackage{setspace} #double space the lines -
-/doublespacing - /usepackage{lineno} #include line numbers -
-/linenumbers bibliography: pilat_prod-repro_zotero-collection.bib
-output: pdf_document \## R Markdown
 
 ##Authors
 
