@@ -7,6 +7,10 @@ groundhog.library('tinytex', '2022-09-12') #for getting a .csl file in markdown
 groundhog.library('tidyverse', '2022-09-12') #for cleaning up datasets
 groundhog.library('rgbif', '2022-09-12') #for loading data from GBIF
 groundhog.library('ggplot2', '2022-09-12') #for plotting and analysis
+groundhog.library('sf', '2022-09-12') #for plotting and analysis
+groundhog.library('raster', '2022-09-12')
+groundhog.library('geodata', '2022-09-12')
+groundhog.library('mapcan', '2022-09-12')
 
 getwd()
 
@@ -24,31 +28,18 @@ dir.create("data/clean")
 dir.create("scripts/data-download")
 dir.create("scripts/outputs")
 dir.create("scripts/manuscript")
-
-#create a directory for the data source
-dir.create("")
-
-data.dest.file <- "/Users/hannahpilat/Documents/UBCO/Living Data Project/Productivity-reproducibility"
-metadata.dest.file <- "/Users/hannahpilat/Documents/UBCO/Living Data Project/Productivity-reproducibility"
+dir.create("scripts/data-cleaning")
 
 #create an object for the GBIF data for the species of interest
 saskatoon_occ <- ("Amelanchier alnifolia")
 
 # download GBIF occurrence records within a specified window of coordinates:
 #list coordinates small first, large second
-gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE, limit = 20000,
-                      decimalLongitude = "-110,-103", decimalLatitude = "52, 56")  
+gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE,
+                      limit = 20000, decimalLongitude = "-110,-103",
+                      decimalLatitude = "52, 56")
 
 #take a look at the downloaded data
 view(gbif_data)
 head(gbif_data)
-
-#get the columns that are relevant for mapping saskatoon's distribution
-gbif_data_relevant <- gbif_data$data[ , c("decimalLongitude", "decimalLatitude","occurrenceStatus")]
-head(gbif_data_relevant)
-class(gbif_data_relevant)
-
-#the relevant data are now in a dataframe, save it as a .csv file in the raw data folder
-write.csv(gbif_data_relevant, file = "data/raw/gbif-saskatoon-occurrences.csv")
-
 

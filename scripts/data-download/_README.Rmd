@@ -1,0 +1,2 @@
+#This is a README file for data download
+This folder contains a script that was used to load required packages for analysis, set up folder directories, and download data from GBIF.

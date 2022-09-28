@@ -1,0 +1,2 @@
+#README for manuscript
+This is a README file for the folder containing an R Markdown file. This file is a manuscript for the analysis of the spatial distribution of saskatoon in central Saskatchewan. It contains annotated code, figures, and outputs. 

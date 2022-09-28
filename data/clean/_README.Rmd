@@ -1,0 +1,2 @@
+#README file for cleaned data
+This is a readme file for cleaned data. Data from GBIF came with many irrelevant columns, so the dataframe with only relevant columns (longitude, latitude, and occurrence status) are included in the .csv file in this folder

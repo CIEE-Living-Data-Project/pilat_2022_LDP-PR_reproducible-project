@@ -1,0 +1,2 @@
+#README for outputs
+This is a README file for the folder containing an R script that was used to plot the spatial distribution of saskatoon in central Saskatchewan. 

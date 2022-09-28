@@ -1,0 +1,55 @@
+---
+title: "Annotated Manuscript for Spatial Distribution of Amelanchier alnifolia occurrences in North-Central Saskatchewan, Canada"
+author: "Hannah Pilat"
+date: "2022-09-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load groundhog package to manage package versions
+
+    library(groundhog)
+
+Load required packages using groundhog.library()
+
+    #to create a project preregistration
+    groundhog.library('prereg', '2022-09-12') 
+
+    #for creating documents and manuscripts
+    groundhog.library('markdown', '2022-09-12')
+
+    #for getting a .csl file in markdown
+    groundhog.library('tinytex', '2022-09-12') 
+
+    #for cleaning up datasets
+    groundhog.library('tidyverse', '2022-09-12') 
+
+    #for loading data from GBIF
+    groundhog.library('rgbif', '2022-09-12') 
+
+    #for plotting and analysis
+    groundhog.library('ggplot2', '2022-09-12') 
+    groundhog.library('sf', '2022-09-12')
+
+Create a folder for data, scripts, analytic outputs, and literature
+
+    dir.create("data/")
+    dir.create("scripts/")
+    dir.create("outputs/")
+    dir.create("literature/")
+
+Create subfolders for raw and clean data within the data folder
+
+    dir.create("data/raw")
+    dir.create("data/clean")
+
+Create subfolders for different codes within the scripts folder
+
+    dir.create("scripts/data-download") 
+    dir.create("scripts/outputs") 
+    dir.create("scripts/manuscript")
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

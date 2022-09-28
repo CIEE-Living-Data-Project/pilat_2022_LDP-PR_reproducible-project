@@ -1,0 +1,2 @@
+#README file for outputs of the project
+This is a README file for the outputs of the code from the analysis of the spatial distribution of saskatoon in central Saskatchewan.

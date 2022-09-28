@@ -1,0 +1,2 @@
+# This is a README file for data cleaning
+This folder contains a script that has been used to clean raw data from GBIF so we have only relevant columns and data. 
