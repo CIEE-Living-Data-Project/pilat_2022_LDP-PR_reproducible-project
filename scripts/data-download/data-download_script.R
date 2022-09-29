@@ -10,7 +10,8 @@ groundhog.library('ggplot2', '2022-09-12') #for plotting and analysis
 groundhog.library('sf', '2022-09-12') #for plotting and analysis
 groundhog.library('raster', '2022-09-12')
 groundhog.library('geodata', '2022-09-12')
-groundhog.library('mapcan', '2022-09-12')
+groundhog.library('mapcan', '2022-09-12') #for getting provincial boundary data
+groundhog.library('remotes', '2022-09-12')
 
 getwd()
 
@@ -42,4 +43,9 @@ gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE,
 #take a look at the downloaded data
 view(gbif_data)
 head(gbif_data)
+
+#get a map of Saskatchewan from mapcan data by specifying the boundaries of the province
+sask_map <- mapcan(boundaries = province,
+                   province = SK,
+                   type = standard)
 

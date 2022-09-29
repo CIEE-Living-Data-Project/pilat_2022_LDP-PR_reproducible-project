@@ -1,2 +1,0 @@
-# README file for literature
-This is a README file used for citing literature on saskatoon's spatial distribution

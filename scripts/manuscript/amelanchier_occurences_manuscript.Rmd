@@ -1,55 +1,110 @@
 ---
-title: "Annotated Manuscript for Spatial Distribution of Amelanchier alnifolia occurrences in North-Central Saskatchewan, Canada"
+title: "Living Data Project PREE Manuscript"
+subtitle: "**Spatial distribution of saskatoon (*Amelanchier alnifolia*)** in central Saskatchewan"
 author: "Hannah Pilat"
-date: "2022-09-24"
-output: html_document
+date: "`r Sys.Date()`"
+# format for Ecology Letters
+geometry: margin=1in
+fig_caption: true
+header-includes: 
+  - \usepackage{setspace}
+  - \doublespacing
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{fontspec} # can only be used with xelatex output
+  - \setmainfont{Times New Roman} # can only be used with xelatex output
+  
+output: 
+  pdf_document:
+      latex_engine: xelatex
+
+
+csl: 'ecology-letters.csl'
+bibliography: ['Literature.bib', 'grateful-refs.bib']
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup with package loading, include=FALSE}
+
+#install and load required packages
+library(groundhog) #for package version controlling
+
+#use groundhog.library to load packages and keep track of which version you used
+groundhog.library('prereg', '2022-09-12') #to create a project preregistration
+groundhog.library('markdown', '2022-09-12') #for creating documents and manuscripts
+groundhog.library('tinytex', '2022-09-12') #for getting a .pdf from markdown
+groundhog.library('tidyverse', '2022-09-12') #for cleaning up datasets
+groundhog.library('rgbif', '2022-09-12') #for loading data from GBIF
+groundhog.library('ggplot2', '2022-09-12') #for plotting and analysis
+groundhog.library('sf', '2022-09-12') #for plotting and analysis
+groundhog.library('raster', '2022-09-12')
+groundhog.library('geodata', '2022-09-12')
+groundhog.library('mapcan', '2022-09-12') #for getting data of provincial boundaries
 ```
 
-Load groundhog package to manage package versions
+```{r create folders and subfolders}
+#code to prevent new directories being created if those directories already exist
+if(!dir.exists("data")){dir.create("data")}
 
-    library(groundhog)
+#create a folder for data
+dir.create("data/")
 
-Load required packages using groundhog.library()
+#create subfolders for raw and clean data within the data folder
+dir.create("data/raw")
+dir.create("data/clean")
+```
 
-    #to create a project preregistration
-    groundhog.library('prereg', '2022-09-12') 
+`{knitr::opts_chunk$set(echo = TRUE)}`
 
-    #for creating documents and manuscripts
-    groundhog.library('markdown', '2022-09-12')
+```{r download occurrence data from GBIF using the rgbif package}
 
-    #for getting a .csl file in markdown
-    groundhog.library('tinytex', '2022-09-12') 
+#create an object for the GBIF data for the species of interest
+saskatoon_occ <- ("Amelanchier alnifolia")
 
-    #for cleaning up datasets
-    groundhog.library('tidyverse', '2022-09-12') 
+#download GBIF occurrence records within a specified window of coordinates:
+#list coordinates small first, large second
+gbif_data <- occ_data(scientificName = saskatoon_occ, hasCoordinate = TRUE,
+                      limit = 20000, decimalLongitude = "-110,-103",
+                      decimalLatitude = "52, 56")
+```
 
-    #for loading data from GBIF
-    groundhog.library('rgbif', '2022-09-12') 
+```{r get data for Saskatchewan provincial boundary using the mapcan package}
 
-    #for plotting and analysis
-    groundhog.library('ggplot2', '2022-09-12') 
-    groundhog.library('sf', '2022-09-12')
+#get a map of Saskatchewan from mapcan data by specifying the boundaries of the province
+sask_map <- mapcan(boundaries = province,
+                   province = SK,
+                   type = standard)
+```
 
-Create a folder for data, scripts, analytic outputs, and literature
+```{r clean the GBIF occurrence data so only the relevant columns are stored}
 
-    dir.create("data/")
-    dir.create("scripts/")
-    dir.create("outputs/")
-    dir.create("literature/")
+#get the columns that are relevant for mapping saskatoon's distribution
+#since these are presence data, we can get rid of the occurrence status column
+#select the longitude and latitude columns
+gbif_data_relevant <- gbif_data$data[ , c("decimalLongitude", "decimalLatitude")]
 
-Create subfolders for raw and clean data within the data folder
+#check the data to confirm only the relevant columns are included
+view(gbif_data_relevant) #or
+head(gbif_data_relevant)
+```
 
-    dir.create("data/raw")
-    dir.create("data/clean")
+```{r write the relevant data to a .csv file and store it in the clean data folder}
 
-Create subfolders for different codes within the scripts folder
+#the relevant data are now in a dataframe, save it as a .csv file in the clean data folder
+write.csv(gbif_data_relevant, file = "data/clean/gbif-saskatoon-occurrences.csv")
+```
 
-    dir.create("scripts/data-download") 
-    dir.create("scripts/outputs") 
-    dir.create("scripts/manuscript")
+```{r plot the occurrence data on the Saskatchewan map using the ggplot 2 package}
+
+#plot the Saskatchewan data and create a polygon to outline and fill the province
+ggplot(data = sask_map, mapping = aes(x = long, y = lat)) +
+  geom_polygon(data = sask_map, mapping = aes(group = group), fill = "grey75", 
+               colour = "black", show.legend = FALSE) +
+#next step is to plot the occurrences of saskatoon plants, but need to adjust the...
+#coordinate reference system so it's consistent between sask_map and gbif_data_relevant data
+  geom_jitter(data = gbif_data_relevant, aes(x = decimalLongitude, y = decimalLatitude), 
+             alpha = 0.5, size = 2, colour = "forestgreen", show.legend = FALSE) +
+  labs(x = 'Longitude', y = 'Latitude') + #create more informative axes labels
+  ggtitle("Amelanchier alnifolia occurrences in central Saskatchewan") #add a title to the figure
+```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
