@@ -7,4 +7,3 @@ ggplot(data = sask_map, mapping = aes(x = long, y = lat)) +
   geom_jitter(data = gbif_data_relevant, aes(x = decimalLongitude, y = decimalLatitude), 
              alpha = 0.5, size = 2, colour = "forestgreen", show.legend = FALSE) +
   labs(x = 'Longitude', y = 'Latitude') + #create more informative axes labels
-  ggtitle("Amelanchier alnifolia occurrences in central Saskatchewan") #add a title to the figure

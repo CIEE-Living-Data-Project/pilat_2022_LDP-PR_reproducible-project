@@ -6,28 +6,31 @@ date: "`r Sys.Date()`"
 # format for Ecology Letters
 geometry: margin=1in
 fig_caption: true
-header-includes: 
+header-includes:
   - \usepackage{setspace}
   - \doublespacing
   - \usepackage{lineno}
   - \linenumbers
   - \usepackage{fontspec} # can only be used with xelatex output
   - \setmainfont{Times New Roman} # can only be used with xelatex output
-  
 output: 
   pdf_document:
       latex_engine: xelatex
-
-
 csl: 'ecology-letters.csl'
 bibliography: ['pilat_prod-repro_zotero-collection.bib', 'grateful-refs.bib']
 ---
 
 ## Abstract 
 
+Culturally significant food plants are threatened by a rapidly changing climate. It is important to understand the spatial distribution of culturally significant food plants to inform conservation decisions. In this study, we map the distribution of saskatoon (*Amelanchier alnifolia*) plants in central Saskatchewan. Although inconclusive, our results may be utilized in further studies analyzing the spatial distribution of saskatoons for conservation applications.
+
 ## Introduction
 
+Saskatoon (*Amelanchier alnifolia*) plants are an important food, medicinal, and material source for many Indigenous Peoples and settler peoples across Canada (Turner et al. 2021). However, saskatoon plants are sensitive to frost (Clavelle 1997). Climate warming effects may cause an earlier spring, which can put saskatoon blooms at risk of frost damage, thus damaging that year's crop of saskatoon berries. This in turn places the security of traditional foods of many Indigenous groups at risk. The distribution of saskatoon patches in central-saskatchewan, straddling the boreal forest, aspen parkland, and prairie ecosystems, is of interest in this study for long-term monitoring of these important food plants.
+
 ## Methods 
+
+We utilized open-source occurrence records from the Global Biodiversity Information Facility (GBIF) for saskatoon plant occurrences in central Saskatchewan, in a rectangular area between 52 and 56ºN and -110 and 103ºW. This area consists of boreal forest, aspen parkland, and prairie grassland ecosystems, representing a diverse array of habitats in which saskatoon plants are known to grow. We attempted to plot these occurrences in R using the ggplot2 package (Wickham 2016; R Core Team 2022).
 
 ```{r setup with package loading, include=FALSE}
 
@@ -54,7 +57,7 @@ library(grateful)
 get_pkgs_info()
 ```
 
-```{r create folders and subfolders}
+```{r create folders and subfolders, echo=FALSE}
 #code to prevent new directories being created if those directories already exist
 if(!dir.exists("data")){dir.create("data")}
 
@@ -108,24 +111,30 @@ write.csv(gbif_data_relevant, file = "data/clean/gbif-saskatoon-occurrences.csv"
 
 ## Results
 
-```{r plot the occurrence data on the Saskatchewan map using the ggplot 2 package}
+The results of this study are inconclusive, as we were unable to perform analyses on the distribution of saskatoon plants (Fig. 1).
 
-#plot the Saskatchewan data and create a polygon to outline and fill the province
+```{r plot the occurrence data on the Saskatchewan map using the ggplot 2 package, fig.cap = "Spatial distribution (presences) of saskatoon (*Amelanchier alnifolia*) in central Saskatchewan, with coordinates in decimal degrees (long, lat)", fig.width=4, fig.height=4}
+
+#plot the Saskatchewan data and create a polygon to outline and fill the province using the ggplot2 package
 ggplot(data = sask_map, mapping = aes(x = long, y = lat)) +
   geom_polygon(data = sask_map, mapping = aes(group = group), fill = "grey75", 
                colour = "black", show.legend = FALSE) +
 #next step is to plot the occurrences of saskatoon plants, but need to adjust the...
 #coordinate reference system so it's consistent between sask_map and gbif_data_relevant data
+#this is why the axes are not in decimal degrees and the occurrences are not plotting on the actual provincial polygon
   geom_jitter(data = gbif_data_relevant, aes(x = decimalLongitude, y = decimalLatitude), 
              alpha = 0.5, size = 2, colour = "forestgreen", show.legend = FALSE) +
-  labs(x = 'Longitude', y = 'Latitude') + #create more informative axes labels
-  ggtitle("Amelanchier alnifolia occurrences in central Saskatchewan") #add a title to the figure
+  labs(x = 'Longitude', y = 'Latitude') #create more informative axes labels
 ```
+
+## Discussion
+
+Once these occurrences are plotted, the resultant maps can be archived and used in future analyses, such as predictive species distribution modelling, analyzing the proximity and accessibility of First Nations and Métis communities to saskatoon populations, and long-term monitoring of saskatoon populations. This important plant used for food, medicinal, and technological purposes by many peoples is also likely to have niche overlap with species of similar use, due to human translocations (Cardillo and Warren 2016; Turner 2021). Quantifying the overlap in spatial distribution between culturally significant plants can help to inform conservation efforts, ultimately leading to economic savings and cultural preservation.
 
 ## References
 
-```{r cite the packages used in this manuscript}
-cite_packages(output = 'paragraph')
+```{r cite the packages used in this manuscript, warnings=FALSE}
+cite_packages(output = "paragraph", citation.style = ecology-letters)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
